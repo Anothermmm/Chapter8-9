@@ -3,22 +3,22 @@
 #include <iomanip>
 #include <string>
 #include <fstream>
-#include <cstdlib>
+#include <cstdlib>//exit(0)è¦åŒ…å«çš„å¤´æ–‡ä»¶
 
 using namespace std;
 
 class CLyric
 {
-private://ÏÈĞ´ÆÕÍ¨³ÉÔ±±äÁ¿£¬ÔÙĞ´¾²Ì¬³ÉÔ±±äÁ¿
-	int m_Minute;			//·ÖÖÓ
-	int m_Second;			//Ãë
-	int m_Millisecond; 	//ºÁÃë
-	string m_Sentence;		//Ò»¾ä¸è´Ê
-    int	m_SequenceId;		//´Ó1¿ªÊ¼µÄÁ÷Ë®ĞòºÅ£¬Ã¿¸ö¶ÔÏó²»ÖØ¸´
-    static int m_MaxId;    //Á÷Ë®ĞòºÅ
+private://å…ˆå†™æ™®é€šæˆå‘˜å˜é‡ï¼Œå†å†™é™æ€æˆå‘˜å˜é‡
+	int m_Minute;			//åˆ†é’Ÿ
+	int m_Second;			//ç§’
+	int m_Millisecond; 	//æ¯«ç§’
+	string m_Sentence;		//ä¸€å¥æ­Œè¯
+    int	m_SequenceId;		//ä»1å¼€å§‹çš„æµæ°´åºå·ï¼Œæ¯ä¸ªå¯¹è±¡ä¸é‡å¤
+    static int m_MaxId;    //æµæ°´åºå·
 
 public:
-    CLyric(int minute, int second, int millisecond, const string& sentence)//¹¹Ôìº¯Êı
+    CLyric(int minute, int second, int millisecond, const string& sentence)//æ„é€ å‡½æ•°
     {
         if(minute<0 || minute>59 || second<0 || second>59 || millisecond<0 || millisecond>999)
         {
@@ -36,7 +36,7 @@ public:
         m_MaxId++;
         m_SequenceId=m_MaxId;
     }
-    CLyric(const CLyric& s)//¿½±´¹¹Ôìº¯Êı
+    CLyric(const CLyric& s)//æ‹·è´æ„é€ å‡½æ•°
     {
         m_Minute=s.m_Minute;
         m_Second=s.m_Second;
@@ -46,11 +46,11 @@ public:
         m_MaxId++;
         m_SequenceId=m_MaxId;
     }
-    int getMinute()const//±È½Ï¶Ì²»³¬¹ıÈıĞĞµÄ³ÉÔ±º¯ÊıÔÚÀàÄÚ¶¨Òå
+    int getMinute()const//æ¯”è¾ƒçŸ­ä¸è¶…è¿‡ä¸‰è¡Œçš„æˆå‘˜å‡½æ•°åœ¨ç±»å†…å®šä¹‰
     {
         return m_Minute;
     }
-    int getSecond()const//Ö»¶Ô¶ÔÏó½øĞĞ¶Á²Ù×÷£¬¿ÉÒÔÑ¡Ôñ¶¨Òå³£³ÉÔ±º¯Êı
+    int getSecond()const//åªå¯¹å¯¹è±¡è¿›è¡Œè¯»æ“ä½œï¼Œå¯ä»¥é€‰æ‹©å®šä¹‰å¸¸æˆå‘˜å‡½æ•°
     {
         return m_Second;
     }
@@ -67,12 +67,13 @@ public:
         return m_SequenceId;
     }
 
-    friend ostream& operator<<(ostream& out,const CLyric& s);//<<Á÷Êä³ö·û±ØĞë¶¨ÒåÎªÓÑÔªº¯Êı£¬Ô­Òò£º
-    friend CLyric operator++(CLyric& s, int);
-    friend CLyric operator+(const CLyric& s, int a);
+    friend ostream& operator<<(ostream& out,const CLyric& s);//<<æµè¾“å‡ºç¬¦å¿…é¡»å®šä¹‰ä¸ºå‹å…ƒå‡½æ•°ï¼ŒåŸå› ï¼š<<å·¦ä¾§æ˜¯è¿ç®—é‡è€Œä¸æ˜¯å¯¹è±¡,å› æ­¤åé¢å‚æ•°ç¬¬ä¸€ä¸ªä¸èƒ½è¢«ä¿®æ”¹
+    friend CLyric operator++(CLyric& s, int);//æ­¤å¤„ç”¨å‹å…ƒå‡½æ•°ï¼Œå¯ä»¥ä¼ å¤šä¸ªå‚æ•°ï¼Œç¬¬äºŒä¸ªintæ˜¯æ ‡è®°åç½®++ï¼Œsä¼šè¢«ä¿®æ”¹æ•…ä¸ç”¨const
+    //å¦‚æœä¸é‡‡ç”¨å‹å…ƒå‡½æ•°å½¢å¼ï¼šCLyric operator++(int);
+    friend CLyric operator+(const CLyric& s, int a);//
 };
 
-int CLyric::m_MaxId=0;//¾²Ì¬³ÉÔ±±äÁ¿ÔÚÀàÍâ¶¨Òå£¬×¢Ã÷ÊÇÄÄ¸öÀàµÄ£¬µ«²»Òª¼Óstatic
+int CLyric::m_MaxId=0;//é™æ€æˆå‘˜å˜é‡åœ¨ç±»å¤–å®šä¹‰ï¼Œæ³¨æ˜æ˜¯å“ªä¸ªç±»çš„ï¼Œä½†ä¸è¦åŠ static
 
 ostream& operator<<(ostream& out,const CLyric& s)
 {
@@ -82,15 +83,28 @@ ostream& operator<<(ostream& out,const CLyric& s)
 
 CLyric operator++(CLyric& s, int)
 {
-    CLyric p(s);
+    CLyric p(s);//æ‹·è´æ„é€ å‡½æ•°æ·±æ‹·è´
 
-	s.m_Second++;
-	s.m_Minute += s.m_Second / 60;
-	s.m_Second %= 60;
-	s.m_Minute %= 60;
+    s.m_Second++;
+    s.m_Minute += s.m_Second / 60;
+    s.m_Second %= 60;
+    s.m_Minute %= 60;
 
     return p;
 }
+
+//å¦‚æœä¸é‡‡ç”¨å‹å…ƒå‡½æ•°å½¢å¼
+//CLyric CLyric::operator++(int)
+//{
+//      CLyric p(*this);
+//
+//	(*this).m_Second++;
+//	(*this).m_Minute += (*this).m_Second / 60;
+//	(*this).m_Second %= 60;
+//	(*this).m_Minute %= 60;
+//
+//      return (*this);
+//}
 
 CLyric operator+(const CLyric& s, int a)
 {
@@ -106,17 +120,9 @@ CLyric operator+(const CLyric& s, int a)
     return p;
 }
 
-
-
-
-
-
-
-
-
-int readSong(const string& path, vector<CLyric>& song)
+int readSong(const string& path, vector<CLyric>& song)//stringä¹Ÿè¦åŠ const &ï¼Œå¯ä»¥ä¼ å³å€¼
 {
-    ifstream fin(path.c_str());
+    ifstream fin(path.c_str());//ä¸æ”¯æŒstringï¼Œè¦è½¬åŒ–æˆcä¸²
     int Min,Sec,Mill,count=0;
     string Sen;
 
@@ -132,7 +138,7 @@ int readSong(const string& path, vector<CLyric>& song)
             }
             else
             {
-                song.push_back(CLyric(Min,Sec,Mill,Sen));
+                song.push_back(CLyric(Min,Sec,Mill,Sen));//ç›´æ¥è°ƒç”¨æ„é€ å‡½æ•°ï¼Œåœ¨åˆ›å»ºçš„æ—¶å€™åˆå§‹åŒ–
             }
         }
         fin.close();
@@ -180,27 +186,27 @@ void writeSong(const string& path, vector<CLyric>& song)
 
 int main()
 {
-	CLyric time1(61,12,125,"¿¼ÊÔÖ®¸è");
-	cout << "Êä³ötime1£º" << endl;
+	CLyric time1(61,12,125,"è€ƒè¯•ä¹‹æ­Œ");
+	cout << "è¾“å‡ºtime1ï¼š" << endl;
 	cout << "id=" << time1.getSequenceId() << " " << time1 << endl;
-	CLyric time2(59, 59, 500,"Ë«½Ø¹÷");
-	cout << "Ö´ĞĞ¼ÓºÅÔËËã·ûºótime2£º" << endl;
+	CLyric time2(59, 59, 500,"åŒæˆªæ£");
+	cout << "æ‰§è¡ŒåŠ å·è¿ç®—ç¬¦åtime2ï¼š" << endl;
 	time2 = time2 + 2000;
 	cout <<"id="<<time2.getSequenceId()<<" "<<time2 << endl;
-	cout << "Ö´ĞĞºóÖÃ++ÔËËã·ûºótime2£º" << endl;
+	cout << "æ‰§è¡Œåç½®++è¿ç®—ç¬¦åtime2ï¼š" << endl;
 	time1 = time2++;
 	cout << "id=" << time2.getSequenceId() << " " << time2 << endl;
 
 	vector<CLyric> song;
-	cout << "¶ÁÈ¡Ô­Ê¼¸è´ÊÎÄ¼ş" << endl;
+	cout << "è¯»å–åŸå§‹æ­Œè¯æ–‡ä»¶" << endl;
 	int count=readSong("d:\\in.txt", song);
-	cout << "¹²ÓĞ" << count << "ĞĞ²»ºÏ·¨Êı¾İ" << endl;
+	cout << "å…±æœ‰" << count << "è¡Œä¸åˆæ³•æ•°æ®" << endl;
 
-	cout << "¸è´ÊÇ°5ĞĞÊÇ£º" << endl;
+	cout << "æ­Œè¯å‰5è¡Œæ˜¯ï¼š" << endl;
 	showTopN(song, 5);
 	offsetSong(song);
-	cout << "ÕıÔÚÉú³É¸è´ÊÎÄ¼ş......"<<endl;
+	cout << "æ­£åœ¨ç”Ÿæˆæ­Œè¯æ–‡ä»¶......"<<endl;
 	writeSong("d:\\out.lrc", song);
-	cout << "Éú³É¸è´ÊÎÄ¼ş³É¹¦£¡"<<endl;
+	cout << "ç”Ÿæˆæ­Œè¯æ–‡ä»¶æˆåŠŸï¼"<<endl;
 	return 0;
 }
